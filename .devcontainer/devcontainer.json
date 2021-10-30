@@ -1,0 +1,78 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.106.0/containers/cpp
+{
+	"name": "MyTest",
+	"dockerFile": "../Dockerfile",
+	// "build": {
+	// 	"args": {
+	// 		"https_proxy": "${localEnv:https_proxy}",
+	// 		"http_proxy": "${localEnv:http_proxy}",
+	// 		"no_proxy": "${localEnv:no_proxy}"
+	// 	}
+	// },
+	"runArgs": [
+		"--cap-add=SYS_PTRACE", 
+		"--security-opt",
+		"seccomp=unconfined", 
+		"--net", "host", 
+		"-e", "DISPLAY=${env:DISPLAY}",
+		// "-e", "http_proxy=${env:http_proxy}",
+		// "-e", "https_proxy=${env:https_proxy}",
+		// "-e", "no_proxy=${env:no_proxy}",
+		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"--init",
+		],
+
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+		],
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+		"editor.formatOnSave": true,
+		"shellcheck.customArgs": ["-x"],
+		"shellcheck.useWorkspaceRootAsCwd": true,
+		"files.associations": {
+			"**/azure-piplines.yml": "azure-pipelines",
+		},
+		"[cpp]": {
+			"editor.defaultFormatter": "xaver.clang-format"
+		},
+		"[c]": {
+			"editor.defaultFormatter": "xaver.clang-format",
+		},
+		"terminal.integrated.defaultProfile.linux": "bash",
+		"terminal.integrated.profiles.linux": {
+			"bash": {
+				"path": "/bin/bash",
+				"args": []
+			},
+		},
+		"cmake.configureOnOpen": false,
+		"update.mode": "none", // disable auto-update
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"DavidAnson.vscode-markdownlint@0.44.4", // Markdown/CommonMark linting and style checking
+		"cschlosser.doxdocgen@1.3.2", // provides Doxygen Documentation generation on the fly (part of ms-vscode.cpptools-extension-pack)
+		"eamodio.gitlens@11.6.0", //Supercharge the Git capabilities built into Visual Studio Code
+		"gruntfuggly.todo-tree@0.0.214", // Show TODO, FIXME, etc. comment tags in a tree view
+		"jeff-hykin.better-cpp-syntax@1.15.6", // improved C-like syntaxes (part of ms-vscode.cpptools-extension-pack)
+		"mhutchie.git-graph@1.30.0", // View a Git Graph of your repository, and perform Git actions from the graph.
+		"ms-azure-devops.azure-pipelines@1.191.0", // Syntax highlighting, IntelliSense, and more for Azure Pipelines YAML
+		"ms-azuretools.vscode-docker@1.17.0", // IntelliSense when editing your Dockerfile and docker-compose.yml files
+		"ms-vscode.cmake-tools@1.8.1", // Extended CMake support (part of ms-vscode.cpptools-extension-pack)
+		"ms-vscode.cpptools-themes@1.0.0", // UI Themes for C/C++ (part of ms-vscode.cpptools-extension-pack)
+		"ms-vscode.cpptools@1.6.0", // C/C++ IntelliSense, debugging, and code browsing (part of ms-vscode.cpptools-extension-pack)
+		"streetsidesoftware.code-spell-checker@2.0.10", // Spell checker
+		"timonwong.shellcheck@0.16.2", // Integrates shellcheck, a shell script static analysis tool
+		"twxs.cmake@0.0.17", // CMake language support for Visual Studio Code (part of ms-vscode.cpptools-extension-pack)
+		"xaver.clang-format@1.9.0", // Use Clang-Format
+	],
+
+	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "user",
+}
