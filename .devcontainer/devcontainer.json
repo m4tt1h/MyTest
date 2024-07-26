@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.106.0/containers/cpp
 {
 	"name": "MyTest",
-	"dockerFile": "../Dockerfile",
+	"dockerFile": "../.docker/Dockerfile",
 	// "build": {
 	// 	"args": {
 	// 		"https_proxy": "${localEnv:https_proxy}",
@@ -11,68 +11,184 @@
 	// 	}
 	// },
 	"runArgs": [
-		"--cap-add=SYS_PTRACE", 
+		"--cap-add=SYS_PTRACE",
 		"--security-opt",
-		"seccomp=unconfined", 
-		"--net", "host", 
-		"-e", "DISPLAY=${env:DISPLAY}",
+		"seccomp=unconfined",
+		"--net",
+		"host",
+		"-e",
+		"DISPLAY=${env:DISPLAY}",
 		// "-e", "http_proxy=${env:http_proxy}",
 		// "-e", "https_proxy=${env:https_proxy}",
 		// "-e", "no_proxy=${env:no_proxy}",
-		"-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+		"-v",
+		"/tmp/.X11-unix:/tmp/.X11-unix",
 		"--init",
-		],
-
-	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
-		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
-		],
-
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-		"editor.formatOnSave": true,
-		"shellcheck.customArgs": ["-x"],
-		"shellcheck.useWorkspaceRootAsCwd": true,
-		"files.associations": {
-			"**/azure-piplines.yml": "azure-pipelines",
-		},
-		"[cpp]": {
-			"editor.defaultFormatter": "xaver.clang-format"
-		},
-		"[c]": {
-			"editor.defaultFormatter": "xaver.clang-format",
-		},
-		"terminal.integrated.defaultProfile.linux": "bash",
-		"terminal.integrated.profiles.linux": {
-			"bash": {
-				"path": "/bin/bash",
-				"args": []
-			},
-		},
-		"cmake.configureOnOpen": false,
-		"update.mode": "none", // disable auto-update
-	},
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"DavidAnson.vscode-markdownlint@0.44.4", // Markdown/CommonMark linting and style checking
-		"cschlosser.doxdocgen@1.3.2", // provides Doxygen Documentation generation on the fly (part of ms-vscode.cpptools-extension-pack)
-		"eamodio.gitlens@11.6.0", //Supercharge the Git capabilities built into Visual Studio Code
-		"gruntfuggly.todo-tree@0.0.214", // Show TODO, FIXME, etc. comment tags in a tree view
-		"jeff-hykin.better-cpp-syntax@1.15.6", // improved C-like syntaxes (part of ms-vscode.cpptools-extension-pack)
-		"mhutchie.git-graph@1.30.0", // View a Git Graph of your repository, and perform Git actions from the graph.
-		"ms-azure-devops.azure-pipelines@1.191.0", // Syntax highlighting, IntelliSense, and more for Azure Pipelines YAML
-		"ms-azuretools.vscode-docker@1.17.0", // IntelliSense when editing your Dockerfile and docker-compose.yml files
-		"ms-vscode.cmake-tools@1.8.1", // Extended CMake support (part of ms-vscode.cpptools-extension-pack)
-		"ms-vscode.cpptools-themes@1.0.0", // UI Themes for C/C++ (part of ms-vscode.cpptools-extension-pack)
-		"ms-vscode.cpptools@1.6.0", // C/C++ IntelliSense, debugging, and code browsing (part of ms-vscode.cpptools-extension-pack)
-		"streetsidesoftware.code-spell-checker@2.0.10", // Spell checker
-		"timonwong.shellcheck@0.16.2", // Integrates shellcheck, a shell script static analysis tool
-		"twxs.cmake@0.0.17", // CMake language support for Visual Studio Code (part of ms-vscode.cpptools-extension-pack)
-		"xaver.clang-format@1.9.0", // Use Clang-Format
 	],
-
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "user",
+	"mounts": [
+		//"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+		//"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+	],
+	// Set *default* container specific settings.json values on container create.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				// // // // // // // // // //
+				//
+				// Extensions related to IDE, Editor
+				//
+				// // // // // // // // // //
+				//
+				// VSCode & Editor settings
+				//
+				"editor.formatOnSave": true,
+				"editor.formatOnPaste": false,
+				"explorer.compactFolders": false,
+				"workbench.statusBar.visible": true,
+				"workbench.tree.indent": 20,
+				"terminal.integrated.enableFileLinks": "on",
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"problems.showCurrentInStatus": false,
+				"C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+				"C_Cpp.errorSquiggles": "disabled",
+				"C_Cpp.intelliSenseEngine": "disabled",
+				"output.smartScroll.enabled": false,
+				"remote.autoForwardPorts": false,
+				"files.exclude": {
+					"**/__pycache__": true
+				},
+				//
+				// JSON settings
+				//
+				"[json][jsonc]": {
+					"editor.quickSuggestions": {
+						"strings": true
+					},
+					"editor.suggest.insertMode": "replace",
+					"gitlens.codeLens.scopes": [
+						"document"
+					],
+					"editor.defaultFormatter": "vscode.json-language-features",
+					"editor.links": true,
+					"editor.definitionLinkOpensInPeek": true
+				},
+				"json.schemaDownload.enable": true,
+				"json.trace.server": "messages",
+				//
+				// // // // // // // // // //
+				//
+				// Extensions related to version control, backend services
+				//
+				// // // // // // // // // //
+				//
+				// Extension - Git
+				//
+				"git.ignoreLimitWarning": true,
+				//
+				// Extension - GitLens
+				//
+				"gitlens.statusBar.enabled": false,
+				"gitlens.statusBar.pullRequests.enabled": false,
+				//
+				// // // // // // // // // //
+				//
+				//
+				// Extension - CMake
+				//
+				"cmake.statusbar.visibility": "compact",
+				"cmake.configureOnOpen": false,
+				"cmake.configureOnEdit": false,
+				"cmake.useCMakePresets": "always",
+				//
+				// Clang-Format
+				//
+				"clang-format.executable": "/usr/bin/clang-format-18",
+				"clang-format.style": "file",
+				"clang-format.language.c.enable": true,
+				"clang-format.language.cpp.enable": true,
+				"[c]": {
+					"editor.defaultFormatter": "xaver.clang-format"
+				},
+				"[cpp]": {
+					"editor.defaultFormatter": "xaver.clang-format"
+				},
+				//
+				// clang-tidy
+				//
+				"Cpp.codeAnalysis.clangTidy.enabled": true,
+				//
+				// clangd
+				//
+				"clangd.path": "clangd-18",
+				"clangd.enableCodeCompletion": false,
+				//
+				// // // // // // // // // //
+				//
+				// Extensions related to testing, coverage, static code analysis
+				//
+				//
+				// Extension - Todo-Tree
+				//
+				// icons
+				// + https://primer.style/design/foundations/icons
+				// + https://microsoft.github.io/vscode-codicons/dist/codicon.html
+				//
+				"todo-tree.tree.showBadges": true,
+				"todo-tree.general.tags": [
+					"FIXME",
+					"TODO",
+					"TEMPLATE"
+				],
+				"todo-tree.general.statusBar": "tags",
+				"todo-tree.general.statusBarClickBehaviour": "reveal",
+				"todo-tree.highlights.useColourScheme": true,
+				"todo-tree.highlights.customHighlight": {
+					"FIXME": {
+						"type": "line",
+						"icon": "bug",
+						"iconColour": "#FF0000",
+						"foreground": "#FF0000",
+						"background": "#00000000",
+						"gutterIcon": true
+					},
+					"TODO": {
+						"type": "line",
+						"icon": "check",
+						"iconColour": "#8fce00",
+						"foreground": "#8fce00",
+						"background": "#00000000",
+						"gutterIcon": true
+					},
+					"TEMPLATE": {
+						"type": "line",
+						"icon": "copy",
+						"iconColour": "#FFFF00",
+						"foreground": "#FFFF00",
+						"background": "#00000000",
+						"gutterIcon": true
+					}
+				},
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"DavidAnson.vscode-markdownlint", // Markdown/CommonMark linting and style checking
+				"cschlosser.doxdocgen", // provides Doxygen Documentation generation on the fly (part of ms-vscode.cpptools-extension-pack)
+				"eamodio.gitlens", //Supercharge the Git capabilities built into Visual Studio Code
+				"gruntfuggly.todo-tree", // Show TODO, FIXME, etc. comment tags in a tree view
+				"jeff-hykin.better-cpp-syntax", // improved C-like syntaxes (part of ms-vscode.cpptools-extension-pack)
+				"mhutchie.git-graph", // View a Git Graph of your repository, and perform Git actions from the graph.
+				"ms-vscode.cmake-tools", // Extended CMake support (part of ms-vscode.cpptools-extension-pack)
+				"ms-vscode.cpptools-themes", // UI Themes for C/C++ (part of ms-vscode.cpptools-extension-pack)
+				"ms-vscode.cpptools", // C/C++ IntelliSense, debugging, and code browsing (part of ms-vscode.cpptools-extension-pack)
+				"streetsidesoftware.code-spell-checker", // Spell checker
+				"timonwong.shellcheck", // Integrates shellcheck, a shell script static analysis tool
+				"twxs.cmake", // CMake language support for Visual Studio Code (part of ms-vscode.cpptools-extension-pack)
+				"xaver.clang-format", // Use Clang-Format
+				"esbenp.prettier-vscode",
+				"llvm-vs-code-extensions.vscode-clangd"
+			],
+			// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+			"remoteUser": "user",
+		}
+	}
 }

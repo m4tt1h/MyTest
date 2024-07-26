@@ -1,8 +1,8 @@
 # Container image that runs your code
-FROM debian:11.1-slim
+FROM ubuntu:latest
 
 ARG USERNAME=user
-ARG USER_UID=1000
+ARG USER_UID=10001
 ARG USER_GID=$USER_UID
 
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     git \
     make \
     valgrind \
+    cppcheck
     && rm -rf /var/lib/apt/lists/*
 
 USER $USER_UID:$USER_GID
