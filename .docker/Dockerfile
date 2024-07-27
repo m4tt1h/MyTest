@@ -23,10 +23,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     clang \
     clang-format \
     clang-tidy \
+    clangd \
     git \
     make \
     valgrind \
-    cppcheck
     && rm -rf /var/lib/apt/lists/*
 
 USER $USER_UID:$USER_GID
