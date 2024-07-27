@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     git \
     make \
     valgrind \
+    ssh \
     && rm -rf /var/lib/apt/lists/*
 
 USER $USER_UID:$USER_GID
