@@ -94,7 +94,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     llvm-dev \
     libclang-dev \
     && rm -rf /var/lib/apt/lists/*
-
    
 USER $USER_UID:$USER_GID
 
@@ -107,6 +106,4 @@ ENV CONAN_CMAKE_GENERATOR=Ninja
 RUN /home/user/.local/bin/conan profile detect 
 # && /home/user/.local/bin/conan install -v --build=missing /tmp/conanfile.txt
 
-
 ENV TERM=xterm-256-colors
-
